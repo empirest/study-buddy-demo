@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A short, offline guide to the Study Buddy demo and its source code.">
+  <title>Study Buddy — App Map</title>
+  <style>
+    :root{color-scheme:light;--ink:#20352e;--muted:#52675c;--paper:#f1f7f1;--card:#fff;--green:#547a62;--line:#d5e2d7}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+    main{max-width:880px;margin:auto;padding:38px 20px 56px}
+    h1{font-size:clamp(2rem,5vw,3rem);line-height:1.12;margin:.25rem 0}
+    h2{font-size:1.2rem;margin:0 0 .65rem}
+    p{margin:.5rem 0}
+    .eyebrow{color:var(--green);font-size:.78rem;font-weight:750;letter-spacing:.08em;text-transform:uppercase}
+    .lede{color:var(--muted);font-size:1.1rem;max-width:700px}
+    section{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:16px}
+    .flow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:9px;margin:16px 0}
+    .step{flex:1 1 175px;border:2px solid var(--green);border-radius:12px;background:#e6f0e6;padding:12px;text-align:center}
+    .arrow{color:var(--green);font-size:1.35rem;font-weight:800}
+    code{overflow-wrap:anywhere;background:#edf2ed;border-radius:4px;padding:1px 4px}
+    ul,ol{padding-left:1.25rem;margin:.5rem 0}
+    li+li{margin-top:.55rem}
+    .note{border-left:4px solid var(--green);padding:.5rem .8rem;background:#f6faf6}
+    footer{color:var(--muted);font-size:.9rem;margin-top:22px}
+    a{color:#315f43}
+    a:focus-visible{outline:3px solid #315f43;outline-offset:3px}
+    @media(max-width:620px){.flow{flex-direction:column}.step{flex-basis:auto;width:100%}.arrow{transform:rotate(90deg)}}
+  </style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">Study Buddy · Offline reference</div>
+  <h1>How the demo fits together</h1>
+  <p class="lede">Study Buddy is a local Streamlit study-chat interface. In its approved demo mode, it accepts text and shows an honest notice; it does not analyze the material or create AI-generated study content.</p>
+
+  <section aria-labelledby="flow-title">
+    <h2 id="flow-title">One action through the app</h2>
+    <div class="flow" aria-label="The learner submits text, the app shows a demo notice, and the notice appears in chat">
+      <div class="step"><strong>Submit text</strong><br><code>app.py</code><br>chat form</div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="step"><strong>Choose demo path</strong><br><code>app.py</code><br><code>preview_notice()</code></div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="step"><strong>See honest notice</strong><br><code>sample_responses.py</code><br>same chat</div>
+    </div>
+    <p class="note">Live AI code is optional and off by default. Real AI output was not verified as part of this demo.</p>
+  </section>
+
+  <section aria-labelledby="route-title">
+    <h2 id="route-title">Reference route through the code</h2>
+    <p>This route is a map for exploring the implementation; it has not yet been toured together.</p>
+    <ol>
+      <li><code>app.py</code> — search for <code>with st.form("study_input_form")</code> to find where the learner enters and sends text.</li>
+      <li><code>app.py</code> — search for <code>if not live_mode</code> to see how demo mode is selected, then follow <code>preview_notice()</code>.</li>
+      <li><code>sample_responses.py</code> — open <code>preview_notice()</code>; its wording explicitly says the text was not analyzed and no request was sent. Back in <code>app.py</code>, the reply is appended to session messages and shown in the chat.</li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="change-title">
+    <h2 id="change-title">To change this, start here</h2>
+    <ul>
+      <li>Change the visible title, topic suggestions, or study-action labels: <code>app.py</code>.</li>
+      <li>Change the no-analysis demo wording: <code>sample_responses.py</code>, function <code>preview_notice()</code>.</li>
+      <li>Adjust the optional provider prompts or explain quota errors: <code>ai_client.py</code>.</li>
+      <li>Check that the app remains honest in demo mode: <code>test_app.py</code>, tests beginning <code>test_configured_key_</code> and <code>test_demo_mode_</code>.</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="practice-title">
+    <h2 id="practice-title">A practice to reuse</h2>
+    <p>The requirement says demo mode must not imply that pasted material was analyzed. <code>test_app.py</code> checks the visible notice even when a key is configured, while <code>sample_responses.py</code> supplies that exact honest message. On another project, turn an important boundary into an observable check so a later change cannot quietly promise more than the app does.</p>
+  </section>
+
+  <section aria-labelledby="run-title">
+    <h2 id="run-title">Run it again</h2>
+    <p>From the project folder, run <code>python -m streamlit run app.py</code>, then open the local address Streamlit prints (usually <code>http://localhost:8501</code>). Live AI stays off unless deliberately enabled and may require paid quota.</p>
+    <p>Source snapshot: commit <code>6a61fde</code>. This map is a static reference and can drift as the code changes. Reopen it at <code>devpost/app-map.html</code>; it works offline and needs no build step.</p>
+  </section>
+  <footer>Study Buddy · A code-orientation guide, not a claim that live AI behavior was verified.</footer>
+</main>
+</body>
+</html>
