@@ -230,3 +230,8 @@ Open issues that do not block the approved demo:
 
 This proof of concept is a no-cost interface demo. Planning documents
 distinguish intended future AI behavior from verified demo behavior.
+
+## Sharing Instructions
+
+- Public GitHub repository: https://github.com/empirest/study-buddy-demo
+- Demo video: To be added after recording and uploading.
