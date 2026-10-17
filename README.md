@@ -12,3 +12,7 @@ Quick start (Windows):
 The app defaults to a no-cost demo mode. It locally counts frequent words from pasted text and clearly labels them as a simple hint—not an AI-generated summary. No API request is sent unless live AI is deliberately enabled. See `devpost/` for the project plans and app map.
 
 Do not commit `.env` or any private keys. A safe example is provided in `.env.example`.
+
+## License
+
+This project is licensed under the MIT License. See `LICENSE` for details.
