@@ -8,6 +8,7 @@ from ai_client import (
     is_live_configured,
 )
 from sample_responses import preview_notice
+from text_insights import extract_frequent_terms
 
 
 st.set_page_config(page_title="Study Buddy", page_icon="📚", layout="centered")
@@ -70,8 +71,8 @@ if live_mode:
     )
 else:
     st.info(
-        "Demo mode is active. Your text is not analyzed and no API request is "
-        "sent. Turn on live AI only if you want to use API credits."
+        "Demo mode is active. No AI request is sent. The app counts frequent "
+        "terms locally; this is a simple word-frequency hint, not an AI summary."
     )
 
 if "messages" not in st.session_state:
@@ -93,6 +94,20 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 if st.session_state.study_text:
+    st.subheader("Key terms")
+    st.caption(
+        "Frequent non-common words, counted locally. This hint does not identify "
+        "the passage's main ideas."
+    )
+    key_terms = extract_frequent_terms(st.session_state.study_text)
+    if key_terms:
+        term_columns = st.columns(len(key_terms))
+        for column, (term, count) in zip(term_columns, key_terms):
+            label = "mention" if count == 1 else "mentions"
+            column.metric(term, f"{count} {label}")
+    else:
+        st.caption("No key terms found in this text.")
+
     st.subheader("Ways to study this")
     study_actions = [
         (

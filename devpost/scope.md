@@ -7,14 +7,15 @@ status: approved
 
 An AI-driven study app concept that turns a pasted chapter into a concise
 summary and suggests ways to study it further. For this hackathon, the
-completed artifact is a small, no-cost interface demo; it does not claim to
-analyze the learner's text.
+completed artifact is a small, no-cost study interface. It locally counts
+frequent words in pasted text, but does not send text to AI or claim to
+generate a summary.
 
 ## The Unique Kernel
 
 The intended product kernel is a focused study conversation grounded in the
-learner's material, rather than a blank chatbot. This no-cost demo shows that
-conversation's interface but does not generate the summary.
+learner's material, rather than a blank chatbot. This no-cost demo shows the
+conversation interface and offers local word-frequency hints.
 
 ## Who It's For
 
@@ -27,7 +28,7 @@ exam takers.
 
 In the intended product, the learner opens the study chat, pastes a chapter,
 reads a concise summary, and asks a follow-up or chooses a suggested way to
-study it further. In this demo, they can try the interface and see an honest
+study it further. In this demo, they see local frequency hints and an honest
 notice instead of generated content.
 
 ## Inspiration & Identity
@@ -37,18 +38,19 @@ generic open-ended chatbot. Use a calming light sage-green atmosphere and a
 distinctive typographic wordmark. The first screen includes a few suggested
 academic topics.
 
-## Design Goal
+## Why This Matters
 
-Make studying easier with an approachable interface and a small, working
-proof of concept.
+The project explores how a focused study chat can help learners work with
+material they provide, while keeping the proof of concept approachable.
 
 ## What "Working" Looks Like
 
-A learner can open the app, paste a chapter, and see the app clearly explain
-that demo mode has not analyzed the text. The interface demonstrates where a
-summary and follow-up or explanation, flashcard, and short-quiz prompts would
-appear. Live AI output is deliberately outside this hackathon's completed
-demo because using the provider requires available API credits.
+A learner can open the app, paste a chapter, see three frequently used terms
+with counts, and try the explanation, flashcard, or short-quiz prompts. The
+terms are calculated locally by simple word frequency, not by AI, and are not
+a summary of the passage. Demo mode sends no study text to the provider. With
+live AI deliberately enabled, the app generated one brief sample summary;
+follow-up responses have not been verified.
 
 ## The POC Boundary
 
@@ -57,15 +59,17 @@ In scope:
 - A simple study-chat interface.
 - A few suggested academic topics before the first message.
 - Pasting one chapter or text passage.
+- Showing up to three frequently used non-common words with their counts,
+  calculated locally from the pasted text.
 - Showing where the intended summary and follow-up would appear, without
-  claiming demo mode analyzed the text.
+  claiming demo mode generates an AI response.
 - Showing suggested chat prompts to explain a key idea, make flashcards, or
   start a short quiz. Demo-mode replies explicitly state that no AI request was
   sent.
 - A no-cost demo mode is the default; live AI is optional and requires a
   deliberate opt-in that may use paid API credits.
-- Live summary and follow-up generation are not verified or represented as
-  working in this demo.
+- Live AI is optional and separate from the no-cost demo mode. One sample
+  summary was verified, while follow-up behavior remains unverified.
 - A straightforward demo using one study session.
 
 ## Later

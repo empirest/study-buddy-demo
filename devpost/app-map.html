@@ -33,18 +33,18 @@
 <main>
   <div class="eyebrow">Study Buddy · Offline reference</div>
   <h1>How the demo fits together</h1>
-  <p class="lede">Study Buddy is a local Streamlit study-chat interface. In its approved demo mode, it accepts text and shows an honest notice; it does not analyze the material or create AI-generated study content.</p>
+  <p class="lede">Study Buddy is a local Streamlit study-chat interface. Demo mode locally counts frequent words in pasted text, then shows an honest notice instead of AI-generated study content.</p>
 
   <section aria-labelledby="flow-title">
     <h2 id="flow-title">One action through the app</h2>
-    <div class="flow" aria-label="The learner submits text, the app shows a demo notice, and the notice appears in chat">
+    <div class="flow" aria-label="The learner submits text, local code counts frequent terms, and the app shows terms and a no-AI notice">
       <div class="step"><strong>Submit text</strong><br><code>app.py</code><br>chat form</div>
       <span class="arrow" aria-hidden="true">→</span>
-      <div class="step"><strong>Choose demo path</strong><br><code>app.py</code><br><code>preview_notice()</code></div>
+      <div class="step"><strong>Count frequent terms</strong><br><code>text_insights.py</code><br><code>extract_frequent_terms()</code></div>
       <span class="arrow" aria-hidden="true">→</span>
-      <div class="step"><strong>See honest notice</strong><br><code>sample_responses.py</code><br>same chat</div>
+      <div class="step"><strong>See terms and notice</strong><br><code>app.py</code><br>local hint, no AI</div>
     </div>
-    <p class="note">Live AI code is optional and off by default. Real AI output was not verified as part of this demo.</p>
+    <p class="note">The terms are simple word-frequency counts, not a summary or measure of importance. One live summary was generated from a sample passage; live follow-up responses remain unverified.</p>
   </section>
 
   <section aria-labelledby="route-title">
@@ -52,8 +52,8 @@
     <p>This route is a map for exploring the implementation; it has not yet been toured together.</p>
     <ol>
       <li><code>app.py</code> — search for <code>with st.form("study_input_form")</code> to find where the learner enters and sends text.</li>
-      <li><code>app.py</code> — search for <code>if not live_mode</code> to see how demo mode is selected, then follow <code>preview_notice()</code>.</li>
-      <li><code>sample_responses.py</code> — open <code>preview_notice()</code>; its wording explicitly says the text was not analyzed and no request was sent. Back in <code>app.py</code>, the reply is appended to session messages and shown in the chat.</li>
+      <li><code>app.py</code> — search for <code>extract_frequent_terms</code> to find the local terms display, and for <code>if not live_mode</code> to see how demo mode avoids an AI request.</li>
+      <li><code>text_insights.py</code> — open <code>extract_frequent_terms()</code> to see how common words are filtered and the most frequent words are counted. <code>sample_responses.py</code> supplies the honest no-AI notice shown in the chat.</li>
     </ol>
   </section>
 
@@ -61,21 +61,22 @@
     <h2 id="change-title">To change this, start here</h2>
     <ul>
       <li>Change the visible title, topic suggestions, or study-action labels: <code>app.py</code>.</li>
-      <li>Change the no-analysis demo wording: <code>sample_responses.py</code>, function <code>preview_notice()</code>.</li>
+      <li>Change the local term-counting rules: <code>text_insights.py</code>, function <code>extract_frequent_terms()</code>.</li>
+      <li>Change the demo notice wording: <code>sample_responses.py</code>, function <code>preview_notice()</code>.</li>
       <li>Adjust the optional provider prompts or explain quota errors: <code>ai_client.py</code>.</li>
-      <li>Check that the app remains honest in demo mode: <code>test_app.py</code>, tests beginning <code>test_configured_key_</code> and <code>test_demo_mode_</code>.</li>
+      <li>Check that the app remains honest in demo mode: <code>test_app.py</code>. Check the local counting rules: <code>test_text_insights.py</code>.</li>
     </ul>
   </section>
 
   <section aria-labelledby="practice-title">
     <h2 id="practice-title">A practice to reuse</h2>
-    <p>The requirement says demo mode must not imply that pasted material was analyzed. <code>test_app.py</code> checks the visible notice even when a key is configured, while <code>sample_responses.py</code> supplies that exact honest message. On another project, turn an important boundary into an observable check so a later change cannot quietly promise more than the app does.</p>
+    <p>The requirement says demo mode must not imply that an AI summary was generated. <code>test_app.py</code> checks the honest notice, while <code>test_text_insights.py</code> checks that local word counts are deterministic. On another project, turn an important boundary into an observable check so a later change cannot quietly promise more than the app does.</p>
   </section>
 
   <section aria-labelledby="run-title">
     <h2 id="run-title">Run it again</h2>
     <p>From the project folder, run <code>python -m streamlit run app.py</code>, then open the local address Streamlit prints (usually <code>http://localhost:8501</code>). Live AI stays off unless deliberately enabled and may require paid quota.</p>
-    <p>Source snapshot: commit <code>6a61fde</code>. This map is a static reference and can drift as the code changes. Reopen it at <code>devpost/app-map.html</code>; it works offline and needs no build step.</p>
+    <p>This map is a static reference to the project files and can drift as the code changes. Use the repository's Git history to see the corresponding source version. Reopen it at <code>devpost/app-map.html</code>; it works offline and needs no build step.</p>
   </section>
   <footer>Study Buddy · A code-orientation guide, not a claim that live AI behavior was verified.</footer>
 </main>

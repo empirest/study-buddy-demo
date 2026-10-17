@@ -9,6 +9,6 @@ Quick start (Windows):
 3. pip install -r requirements.txt
 4. python -m streamlit run app.py
 
-The app defaults to a no-cost demo mode that explicitly shows a notice instead of sending pasted text to an AI provider. See `devpost/` for the scope, PRD, spec, checklist, and a compact app map (`devpost/app-map.html`) that explains where the demo notice appears in the code.
+The app defaults to a no-cost demo mode. It locally counts frequent words from pasted text and clearly labels them as a simple hint—not an AI-generated summary. No API request is sent unless live AI is deliberately enabled. See `devpost/` for the project plans and app map.
 
 Do not commit `.env` or any private keys. A safe example is provided in `.env.example`.

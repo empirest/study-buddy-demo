@@ -16,13 +16,17 @@ class StudyChatAppTests(unittest.TestCase):
             self.assertTrue(
                 any(
                     "Demo mode is active" in item.value
-                    and "no API request is sent" in item.value
+                    and "No AI request is sent" in item.value
+                    and "counts frequent terms locally" in item.value
                     for item in app.info
                 )
             )
             self.assertFalse(app.toggle[0].value)
             self.assertTrue(
-                any("I have not analyzed it" in item.value for item in app.markdown)
+                any(item.label.lower() == "plants" for item in app.metric)
+            )
+            self.assertTrue(
+                any("No AI response was generated" in item.value for item in app.markdown)
             )
 
     def test_demo_mode_exposes_study_actions_without_claiming_analysis(self):
@@ -36,19 +40,22 @@ class StudyChatAppTests(unittest.TestCase):
             app.text_area[0].set_value("Plants use sunlight to make food.")
             app.button[-1].click().run()
 
+            self.assertTrue(
+                any(item.label.lower() == "plants" for item in app.metric)
+            )
             labels = [button.label for button in app.button]
             self.assertIn("Explain more", labels)
             self.assertIn("Make flashcards", labels)
             self.assertIn("Start a short quiz", labels)
             self.assertTrue(
-                any("I have not analyzed it" in item.value for item in app.markdown)
+                any("No AI response was generated" in item.value for item in app.markdown)
             )
 
             app.button[2].click().run()
 
             self.assertEqual(len(app.exception), 0)
             self.assertTrue(
-                any("I have not analyzed it" in item.value for item in app.markdown)
+                any("No AI response was generated" in item.value for item in app.markdown)
             )
 
     def test_empty_submission_shows_reminder(self):
